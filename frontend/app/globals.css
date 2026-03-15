@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0a0e1a; }
+::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #4a5568; }
+
+/* ── Glass surface ── */
+.glass {
+  background: rgba(13, 18, 30, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.glass-lighter {
+  background: rgba(20, 27, 45, 0.7);
+  border: 1px solid rgba(55, 65, 81, 0.4);
+}
+
+/* ── Animations ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeSlideUp 0.3s ease-out forwards; }
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #1e293b 25%, #2d3a50 50%, #1e293b 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── Path node pill ── */
+.path-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.path-pill.active {
+  background: #172554;
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+/* ── Tab underline ── */
+.tab-active {
+  border-bottom: 2px solid #f59e0b;
+  color: #f59e0b;
+}
+
+/* ── Hover lift ── */
+.hover-lift {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
