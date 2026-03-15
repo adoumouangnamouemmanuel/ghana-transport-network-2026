@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchFastest, fetchShortest, fetchTop3 } from "@/lib/api";
+import { fetchTop3 } from "@/lib/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ForceGraph2D from "react-force-graph-2d";
 
@@ -30,20 +30,21 @@ type RouteLayer = {
   cost?: number;
 };
 
+type ApiTopRoute = {
+  rank?: number;
+  path?: string[];
+  totalDistance?: number;
+  totalTime?: number;
+  totalCost?: number;
+};
+
 type NodeInfo = {
   id: string;
   degree: number;
   neighbors: Array<{ name: string; dist: number; time: number }>;
 };
 
-// ── Route layer config ────────────────────────────────────────────────────────
-const LAYER_CONFIGS = [
-  { id: "shortest", label: "Shortest Distance", color: "#3b82f6" },
-  { id: "fastest", label: "Fastest Time", color: "#a855f7" },
-  { id: "top3_1", label: "Top Route #1", color: "#f59e0b" },
-  { id: "top3_2", label: "Top Route #2", color: "#f97316" },
-  { id: "top3_3", label: "Top Route #3", color: "#ef4444" },
-];
+const TOP_ROUTE_COLORS = ["#f59e0b", "#f97316", "#ef4444"];
 
 // ── Build edge key ────────────────────────────────────────────────────────────
 const edgeKey = (a: string, b: string) => [a, b].sort().join("|||");
@@ -112,45 +113,26 @@ export default function NetworkGraph({
     }
     let cancelled = false;
     setLoadingRoutes(true);
-    Promise.all([
-      fetchShortest(from, to),
-      fetchFastest(from, to),
-      fetchTop3(from, to),
-    ])
-      .then(([s, f, t]) => {
+    fetchTop3(from, to)
+      .then((t) => {
         if (cancelled) return;
         const newLayers: RouteLayer[] = [];
-        if (s?.path)
-          newLayers.push({
-            id: "shortest",
-            label: "Shortest Distance",
-            color: "#3b82f6",
-            path: s.path,
-            enabled: true,
-            distance: s.totalDistance,
-            time: s.totalTime,
-          });
-        if (f?.path)
-          newLayers.push({
-            id: "fastest",
-            label: "Fastest Time",
-            color: "#a855f7",
-            path: f.path,
-            enabled: true,
-            distance: f.totalDistance,
-            time: f.totalTime,
-          });
-        if (t?.routes) {
-          const colors = ["#f59e0b", "#f97316", "#ef4444"];
-          t.routes.forEach((r: any, i: number) => {
+        const topRoutes: ApiTopRoute[] = Array.isArray(t?.routes)
+          ? t.routes
+          : [];
+        if (topRoutes.length > 0) {
+          topRoutes.forEach((r, i) => {
+            if (!Array.isArray(r.path) || r.path.length === 0) return;
             newLayers.push({
               id: `top3_${i + 1}`,
-              label: `Top Route #${r.rank}`,
-              color: colors[i],
+              label: `Top Route #${r.rank ?? i + 1}`,
+              color:
+                TOP_ROUTE_COLORS[i] ||
+                TOP_ROUTE_COLORS[TOP_ROUTE_COLORS.length - 1],
               path: r.path,
               enabled: i === 0,
-              distance: r.totalDistance,
-              time: r.totalTime,
+              distance: r.totalDistance ?? 0,
+              time: r.totalTime ?? 0,
               cost: r.totalCost,
             });
           });
@@ -170,7 +152,8 @@ export default function NetworkGraph({
   const activeEdgeMap = useMemo(() => {
     const map: Record<string, string[]> = {}; // edgeKey → [color, ...]
     for (const layer of layers) {
-      if (!layer.enabled) continue;
+      if (!layer.enabled || !Array.isArray(layer.path) || layer.path.length < 2)
+        continue;
       for (let i = 0; i < layer.path.length - 1; i++) {
         const k = edgeKey(layer.path[i], layer.path[i + 1]);
         (map[k] ||= []).push(layer.color);
@@ -183,7 +166,12 @@ export default function NetworkGraph({
   const activeNodeMap = useMemo(() => {
     const map: Record<string, string> = {};
     for (const layer of layers) {
-      if (!layer.enabled) continue;
+      if (
+        !layer.enabled ||
+        !Array.isArray(layer.path) ||
+        layer.path.length === 0
+      )
+        continue;
       layer.path.forEach((n, i) => {
         if (i === 0) map[n] = "#22c55e";
         else if (i === layer.path.length - 1) map[n] = "#ef4444";
@@ -323,7 +311,7 @@ export default function NetworkGraph({
                 : isEnd
                   ? "rgba(239,68,68,0.25)"
                   : "rgba(148,163,184,0.15)";
-        
+
         // Add native canvas glow
         ctx.shadowBlur = 15;
         ctx.shadowColor = ctx.fillStyle;
@@ -455,7 +443,7 @@ export default function NetworkGraph({
       const mx = (sx + tx) / 2,
         my = (sy + ty) / 2;
 
-        // Neighbor edge — draw bright white line with label on canvas
+      // Neighbor edge — draw bright white line with label on canvas
       if (isNeighborEdge && !colors?.length) {
         ctx.beginPath();
         ctx.moveTo(sx, sy);
@@ -704,8 +692,10 @@ export default function NetworkGraph({
           onNodeHover={(node: any) => setHoveredNode(node ? node.id : null)}
           onLinkHover={(link: any) => setHoveredLink(link)}
           linkDirectionalArrowLength={(link: any) => {
-            const srcId = typeof link.source === "object" ? link.source.id : link.source;
-            const tgtId = typeof link.target === "object" ? link.target.id : link.target;
+            const srcId =
+              typeof link.source === "object" ? link.source.id : link.source;
+            const tgtId =
+              typeof link.target === "object" ? link.target.id : link.target;
             const hasColor = activeEdgeMap[edgeKey(srcId, tgtId)]?.length;
             return hasColor ? 4 : 0; // Show slightly enlarged arrow on active links
           }}
@@ -848,16 +838,16 @@ export default function NetworkGraph({
           ))}
           <div className="border-t border-[#1a2332] mt-1.5 pt-1.5 space-y-1">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-1.5 rounded flex-shrink-0 bg-blue-500" />
-              <span className="text-slate-300">Shortest</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-1.5 rounded flex-shrink-0 bg-purple-500" />
-              <span className="text-slate-300">Fastest</span>
-            </div>
-            <div className="flex items-center gap-2">
               <span className="w-2.5 h-1.5 rounded flex-shrink-0 bg-amber-500" />
-              <span className="text-slate-300">Top routes</span>
+              <span className="text-slate-300">Top Route #1</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-1.5 rounded flex-shrink-0 bg-orange-500" />
+              <span className="text-slate-300">Top Route #2</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-1.5 rounded flex-shrink-0 bg-red-500" />
+              <span className="text-slate-300">Top Route #3</span>
             </div>
           </div>
           <div className="border-t border-[#1a2332] mt-1.5 pt-1.5 text-[9px] text-slate-400 space-y-0.5">
