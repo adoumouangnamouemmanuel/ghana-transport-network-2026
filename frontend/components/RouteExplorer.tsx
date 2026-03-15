@@ -143,7 +143,7 @@ export default function RouteExplorer({ towns, onRouteFound, clickedNode, onClea
       {single && (
         <div className="glass rounded-2xl p-6 space-y-4 fade-in">
           <h3 className="text-base font-semibold text-slate-300">
-            {mode === "shortest" ? "🏁 Shortest Distance" : "⚡ Fastest Time"} — {from} → {to}
+            {mode === "shortest" ? "🏁 Shortest Distance" : "Fastest Time"} — {from} → {to}
           </h3>
           <PathChain path={single.path} />
           <div className="flex flex-wrap gap-4 pt-2">
