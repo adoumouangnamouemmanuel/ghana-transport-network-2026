@@ -1,7 +1,8 @@
 package model;
 
 /**
- * Holds cost analysis for a route recommendation.
+ * Computes the estimated costs for a route.
+ * Includes fuel cost based on distance and time cost.
  */
 public class RouteRecommendation {
     private static final double FUEL_CONSUMPTION_KM_PER_LITRE = 8.0;
@@ -20,18 +21,30 @@ public class RouteRecommendation {
         this.totalCost = distanceCost + timeCost;
     }
 
-    public PathResult getPath() { return path; }
-    public double getDistanceCost() { return distanceCost; }
-    public double getTimeCost() { return timeCost; }
-    public double getTotalCost() { return totalCost; }
+    // getters
+    public PathResult getPath() {
+        return path;
+    }
 
+    public double getDistanceCost() {
+        return distanceCost;
+    }
+
+    public double getTimeCost() {
+        return timeCost;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    // String representation
     @Override
     public String toString() {
-        return String.format(
-            "  Path     : %s%n" +
-            "  Distance : %d km | Time: %d min%n" +
-            "  Fuel Cost: GHS %.2f | Time Cost: GHS %.2f | Total: GHS %.2f",
-            path.getPathString(), path.getTotalDistance(), path.getTotalTime(),
-            distanceCost, timeCost, totalCost);
+        return "  Path     : " + path.getPathString() + "\n" +
+                "  Distance : " + path.getTotalDistance() + " km | Time: " + path.getTotalTime() + " min\n" +
+                "  Fuel Cost: GHS " + String.format("%.2f", distanceCost) +
+                " | Time Cost: GHS " + String.format("%.2f", timeCost) +
+                " | Total: GHS " + String.format("%.2f", totalCost);
     }
 }
