@@ -3,7 +3,8 @@ package model;
 import java.util.List;
 
 /**
- * Holds the result of a path search: the ordered list of towns,
+ * After searching a particular path from a source to a destination town
+ * this holds the result of the path searched: the ordered list of towns,
  * total distance and total travel time.
  */
 public class PathResult {
@@ -17,17 +18,31 @@ public class PathResult {
         this.totalTime = totalTime;
     }
 
-    public List<String> getTowns() { return towns; }
-    public int getTotalDistance() { return totalDistance; }
-    public int getTotalTime() { return totalTime; }
+    // getters
+    public List<String> getTowns() {
+        return towns;
+    }
 
-    public String getPathString() {
+    public int getTotalDistance() {
+        return totalDistance;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    /**
+     * convert the list of towns into a string showing the road
+     * -> is used as delimiter.
+     */
+    public String getPathString()
+    {
         return String.join(" -> ", towns);
     }
 
     @Override
     public String toString() {
-        return String.format("Path: %s%nDistance: %d km | Time: %d min",
-                getPathString(), totalDistance, totalTime);
+        return "Path: " + getPathString() + "\n" +
+                "Distance: " + totalDistance + " km | Time: " + totalTime + " min";
     }
 }
