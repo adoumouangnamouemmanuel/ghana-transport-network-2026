@@ -7,8 +7,8 @@ import model.PathResult;
 import java.util.*;
 
 /**
- * Standard Dijkstra's algorithm over the TransportGraph.
- * Weight selector allows switching between distance and travel time.
+ * Standard Dijkstra's algorithm for TransportGraph.
+ * Can choose distance or time as edge weight.
  */
 public class Dijkstra {
 
@@ -16,91 +16,83 @@ public class Dijkstra {
 
     /**
      * Finds the shortest path from source to destination using the chosen weight.
-     *
-     * @return PathResult or null if no path exists.
+     * Returns null if no path exists.
      */
     public static PathResult shortestPath(TransportGraph graph, String source, String destination, Weight weight) {
         String src = source.trim().toLowerCase();
         String dst = destination.trim().toLowerCase();
 
+        // If either town doesn't exist, return null
         if (!graph.containsTown(source) || !graph.containsTown(destination)) return null;
 
-        // dist map  (using lower-case keys)
-        Map<String, Integer> dist = new HashMap<>();
-        Map<String, String>  prev = new HashMap<>();
+        // Maps for shortest distance so far and path tracking
+        Map<String, Long> dist = new HashMap<>();
+        Map<String, String> prev = new HashMap<>();
 
-        // priority queue: [cost, townKey]
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        // parallel string queue for town names
-        PriorityQueue<Object[]> queue = new PriorityQueue<>(Comparator.comparingInt(a -> (int) a[0]));
+        // Initialize distances to infinity
+        for (String t : graph.getAllTowns()) dist.put(t.toLowerCase(), Long.MAX_VALUE);
+        dist.put(src, 0L); // source distance = 0
 
-        // Use a combined PQ entry: (cost, townKey)
-        Map<String, Integer> costMap = new HashMap<>();
-        for (String t : graph.getAllTowns()) costMap.put(t.toLowerCase(), Integer.MAX_VALUE);
-        costMap.put(src, 0);
-
-        // PQ stores [cost, townKey (lowercase)]
-        TreeMap<Integer, List<String>> bfsQueue = null; // not used – just use PQ below
-
-        // Standard Dijkstra with PQ of (cost, key)
-        PriorityQueue<long[]> pqMain = new PriorityQueue<>(Comparator.comparingLong(a -> a[0]));
-        Map<String, Long> bestCost = new HashMap<>();
-        pqMain.offer(new long[]{0, src.hashCode()}); // can't put strings easily; use separate map
-
-        // Cleaner implementation using Object PQ
-        record Entry(long cost, String key) implements Comparable<Entry> {
-            public int compareTo(Entry o) { return Long.compare(this.cost, o.cost); }
+        // Inner class for priority queue entries
+        class Entry implements Comparable<Entry> {
+            String key;   // town key (lowercase)
+            long cost;    // distance/time cost
+            Entry(String k, long c) { key = k; cost = c; }
+            public int compareTo(Entry o) { return Long.compare(cost, o.cost); }
         }
 
         PriorityQueue<Entry> open = new PriorityQueue<>();
-        Map<String, Long> visited = new HashMap<>();
-        Map<String, String> parent = new HashMap<>();
+        open.offer(new Entry(src, 0L)); // start with source
 
-        open.offer(new Entry(0, src));
-        visited.put(src, 0L);
-
+        // Main Dijkstra loop
         while (!open.isEmpty()) {
             Entry curr = open.poll();
-            if (curr.cost > visited.getOrDefault(curr.key, Long.MAX_VALUE)) continue;
+
+            // Stop if we reached the destination
             if (curr.key.equals(dst)) break;
 
+            // Check all neighbors of current town
             for (Edge edge : graph.getNeighbors(graph.canonical(curr.key))) {
-                String nbrKey = edge.getDestination().toLowerCase();
+                String nbr = edge.getDestination().toLowerCase();
                 long w = (weight == Weight.DISTANCE) ? edge.getDistanceKm() : edge.getTravelTimeMinutes();
                 long newCost = curr.cost + w;
 
-                if (newCost < visited.getOrDefault(nbrKey, Long.MAX_VALUE)) {
-                    visited.put(nbrKey, newCost);
-                    parent.put(nbrKey, curr.key);
-                    open.offer(new Entry(newCost, nbrKey));
+                // Update neighbor if we found a shorter path
+                if (newCost < dist.getOrDefault(nbr, Long.MAX_VALUE)) {
+                    dist.put(nbr, newCost);
+                    prev.put(nbr, curr.key);
+                    open.offer(new Entry(nbr, newCost));
                 }
             }
         }
 
-        if (!visited.containsKey(dst)) return null;
+        // No path found
+        if (!dist.containsKey(dst) || dist.get(dst) == Long.MAX_VALUE) return null;
 
-        // Reconstruct path
+        // Reconstruct the path from destination to source
         List<String> path = new ArrayList<>();
         String cur = dst;
         while (cur != null) {
             path.add(graph.canonical(cur));
-            cur = parent.get(cur);
+            cur = prev.get(cur);
         }
-        Collections.reverse(path);
+        Collections.reverse(path); // path should go from source -> destination
 
-        // Calculate both distance and time for the path
+        // Compute total distance and time along the path
         int totalDist = 0, totalTime = 0;
         for (int i = 0; i < path.size() - 1; i++) {
             String from = path.get(i);
-            String to   = path.get(i + 1);
+            String to = path.get(i + 1);
             for (Edge e : graph.getNeighbors(from)) {
                 if (e.getDestination().equalsIgnoreCase(to)) {
                     totalDist += e.getDistanceKm();
                     totalTime += e.getTravelTimeMinutes();
-                    break;
+                    break; // found the edge, no need to check others
                 }
             }
         }
+
+        // Return the final path result
         return new PathResult(path, totalDist, totalTime);
     }
 }
