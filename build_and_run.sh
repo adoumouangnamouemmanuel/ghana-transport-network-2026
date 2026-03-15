@@ -17,7 +17,7 @@ mkdir -p "$OUT_DIR"
 
 # Compile
 echo "[1/2] Compiling..."
-find "$SRC_DIR" -name "*.java" | xargs javac --enable-preview --release 21 -d "$OUT_DIR" 2>&1
+find "$SRC_DIR" -name "*.java" ! -path "$SRC_DIR/api/*" | xargs javac -encoding UTF-8 --release 17 -d "$OUT_DIR" 2>&1
 
 if [ $? -ne 0 ]; then
     echo "[ERROR] Compilation failed."
@@ -28,4 +28,4 @@ echo "[2/2] Compilation successful. Running..."
 echo ""
 
 # Run
-java --enable-preview -cp "$OUT_DIR" "$MAIN_CLASS" "$DATA_FILE"
+java -cp "$OUT_DIR" "$MAIN_CLASS" "$DATA_FILE"
