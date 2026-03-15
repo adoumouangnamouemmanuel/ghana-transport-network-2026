@@ -49,7 +49,7 @@ public class Main {
         // ================================================================
         // PART A – Q1: Summary statistics
         // ================================================================
-        System.out.println("\n" + "═".repeat(70));
+        System.out.println("\n" + "=".repeat(70));
         System.out.println("  PART A – Q1: DATA LOADING SUMMARY");
         GraphDisplay.printSummary(graph);
 
