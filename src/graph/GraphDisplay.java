@@ -2,14 +2,16 @@ package graph;
 
 import model.Edge;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Provides text-based display utilities for the transport graph.
  */
 public class GraphDisplay {
 
-    private static final int COL_WIDTH = 20;
     private static final String SEPARATOR = "=".repeat(70);
 
     public static void printSummary(TransportGraph graph) {
