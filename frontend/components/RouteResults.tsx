@@ -1,51 +1,95 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { fetchShortest, fetchFastest, fetchTop3 } from "@/lib/api";
+import { fetchFastest, fetchShortest, fetchTop3 } from "@/lib/api";
+import { useEffect, useState } from "react";
 
-type SingleRoute = { path: string[]; totalDistance: number; totalTime: number; error?: string };
-type RouteRank = {
-  rank: number; path: string[]; totalDistance: number; totalTime: number;
-  distanceCost: number; timeCost: number; totalCost: number;
+type SingleRoute = {
+  path: string[];
+  totalDistance: number;
+  totalTime: number;
+  error?: string;
 };
-type Top3Result = { routes: RouteRank[]; recommendation: { rank: number; reason: string } };
+type RouteRank = {
+  rank: number;
+  path: string[];
+  totalDistance: number;
+  totalTime: number;
+  distanceCost: number;
+  timeCost: number;
+  totalCost: number;
+};
+type Top3Result = {
+  routes: RouteRank[];
+  recommendation: { rank: number; reason: string };
+};
 
-type Props = { from: string; to: string; onRouteHighlight: (path: string[]) => void };
+type Props = {
+  from: string;
+  to: string;
+  onRouteHighlight: (path: string[]) => void;
+};
 
 type RouteMode = "shortest" | "fastest" | "top3";
 
-function PathChain({ path, highlight = false }: { path: string[]; highlight?: boolean }) {
+function PathChain({ path }: { path: string[] }) {
   return (
-    <div className="flex flex-wrap gap-1 items-center">
+    <div className="flex flex-wrap gap-1.5 items-center mt-2">
       {path.map((town, i) => (
-        <span key={i} className="flex items-center gap-1">
-          <span className={`path-pill ${highlight ? "active" : ""}`}>{town}</span>
-          {i < path.length - 1 && <span className="text-slate-600 text-xs">→</span>}
+        <span key={i} className="flex items-center gap-1.5">
+          <span className="px-2 py-1 rounded-md text-[11px] font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 shadow-[0_0_10px_rgba(99,102,241,0.15)] whitespace-nowrap">
+            {town}
+          </span>
+          {i < path.length - 1 && (
+            <span className="text-slate-500 text-[9px] opacity-60">➔</span>
+          )}
         </span>
       ))}
     </div>
   );
 }
 
-function Stat({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
+function Stat({
+  label,
+  value,
+  highlight,
+}: {
+  label: string;
+  value: string | number;
+  highlight?: boolean;
+}) {
   return (
-    <div className="glass-lighter rounded-lg p-3">
-      <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-0.5">{label}</p>
-      <p className="text-base font-bold text-slate-100">{value}</p>
-      {sub && <p className="text-[10px] text-slate-500 mt-0.5">{sub}</p>}
+    <div className="stat-box">
+      <p className="text-[9px] text-slate-400 uppercase tracking-widest mb-1.5 font-bold">
+        {label}
+      </p>
+      <p
+        className={`text-sm font-bold bg-white/5 px-2 py-1 rounded border border-white/5 text-center ${highlight ? "text-amber-400 border-amber-500/20" : "text-slate-100"}`}
+      >
+        {value}
+      </p>
     </div>
   );
 }
 
 function SkeletonCard() {
   return (
-    <div className="glass rounded-xl p-5 space-y-3 animate-pulse">
+    <div className="card p-5 space-y-3 animate-pulse">
       <div className="h-4 shimmer rounded w-1/3" />
       <div className="h-3 shimmer rounded w-full" />
       <div className="h-3 shimmer rounded w-4/5" />
       <div className="grid grid-cols-3 gap-2">
-        {[1,2,3].map(i => <div key={i} className="h-10 shimmer rounded-lg" />)}
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-9 shimmer rounded-lg" />
+        ))}
       </div>
+    </div>
+  );
+}
+
+function EmptyResult() {
+  return (
+    <div className="card p-5 text-sm text-slate-300">
+      No route found for this selection.
     </div>
   );
 }
@@ -53,262 +97,391 @@ function SkeletonCard() {
 export default function RouteResults({ from, to, onRouteHighlight }: Props) {
   const [mode, setMode] = useState<RouteMode>("shortest");
   const [shortest, setShortest] = useState<SingleRoute | null>(null);
-  const [fastest, setFastest]   = useState<SingleRoute | null>(null);
-  const [top3, setTop3]         = useState<Top3Result | null>(null);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState<string | null>(null);
+  const [fastest, setFastest] = useState<SingleRoute | null>(null);
+  const [top3, setTop3] = useState<Top3Result | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Auto-search whenever both towns are selected
   useEffect(() => {
     if (!from || !to || from === to) {
-      setShortest(null); setFastest(null); setTop3(null); setError(null);
+      setShortest(null);
+      setFastest(null);
+      setTop3(null);
+      setError(null);
       return;
     }
     let cancelled = false;
-    setLoading(true); setError(null);
-    setShortest(null); setFastest(null); setTop3(null);
+    setLoading(true);
+    setError(null);
+    setShortest(null);
+    setFastest(null);
+    setTop3(null);
 
     Promise.all([
       fetchShortest(from, to),
       fetchFastest(from, to),
       fetchTop3(from, to),
-    ]).then(([s, f, t]) => {
-      if (cancelled) return;
-      setShortest(s?.error ? null : s);
-      setFastest(f?.error ? null : f);
-      setTop3(t?.routes?.length ? t : null);
-      if (s?.error) setError(s.error);
-      // highlight the active route
-      const active = { shortest: s, fastest: f }[mode];
-      if (active?.path) onRouteHighlight(active.path);
-      else if (t?.routes?.[0]) onRouteHighlight(t.routes[0].path);
-    }).catch(e => {
-      if (!cancelled) setError("Could not reach the backend. Is Spring Boot running on port 8081?");
-    }).finally(() => { if (!cancelled) setLoading(false); });
+    ])
+      .then(([s, f, t]) => {
+        if (cancelled) return;
+        
+        // Check if the backend returned a general Spring error (e.g. 500 or 400)
+        const isSpringError = (res: any) => res?.error && typeof res.error === 'string' && (res.status === 400 || res.status === 500);
+        // Check if it's our custom API error
+        const isApiError = (res: any) => res?.error && typeof res.error === 'string';
 
-    return () => { cancelled = true; };
+        const sh = isSpringError(s) || isApiError(s) || !s?.path ? null : s;
+        const fa = isSpringError(f) || isApiError(f) || !f?.path ? null : f;
+        const t3 = isSpringError(t) || isApiError(t) || !t?.routes?.length ? null : t;
+        
+        setShortest(sh);
+        setFastest(fa);
+        setTop3(t3);
+        
+        // Only set error if all three failed and it's a structural error
+        if (!sh && !fa && !t3 && (s?.error || s?.status)) {
+           setError(typeof s.error === 'string' ? s.error : "No viable path found between these towns.");
+        }
+
+        // Always highlight a valid path if one exists, prioritizing shortest
+        const bestPath = sh?.path || fa?.path || t3?.routes?.[0]?.path;
+        
+        if (bestPath) {
+          onRouteHighlight(bestPath);
+        } else {
+          onRouteHighlight([]);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          console.error("Route fetch error:", err);
+          setError("Cannot reach backend or path not found.");
+          onRouteHighlight([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [from, to]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Update highlight when mode changes
+  // Update highlight when mode changes, but only if the route is actually available
   useEffect(() => {
-    if (mode === "shortest" && shortest?.path) onRouteHighlight(shortest.path);
-    else if (mode === "fastest"  && fastest?.path)  onRouteHighlight(fastest.path);
-    else if (mode === "top3"     && top3?.routes?.[0]) onRouteHighlight(top3.routes[0].path);
-  }, [mode]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (loading) return;
+    let pathToHighlight: string[] | undefined = undefined;
 
-  // ── Empty state ──
+    if (mode === "shortest") pathToHighlight = shortest?.path;
+    else if (mode === "fastest") pathToHighlight = fastest?.path;
+    else if (mode === "top3") pathToHighlight = top3?.routes?.[0]?.path;
+
+    // Fallback if the selected mode is unavailable but another is
+    if (!pathToHighlight) {
+       pathToHighlight = shortest?.path || fastest?.path || top3?.routes?.[0]?.path;
+    }
+
+    if (pathToHighlight) {
+      onRouteHighlight(pathToHighlight);
+    } else {
+      onRouteHighlight([]);
+    }
+  }, [mode, shortest, fastest, top3, loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
   if (!from || !to) {
     return (
-      <div className="flex flex-col items-center justify-center h-full min-h-[60vh] text-center px-8 space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-3xl">⇌</div>
-        <h2 className="text-lg font-semibold text-slate-300">Select two towns to explore routes</h2>
-        <p className="text-sm text-slate-500 max-w-sm">
-          Use the <strong className="text-slate-400">Start</strong> and <strong className="text-slate-400">End</strong> dropdowns in the header.
-          Routes will appear automatically.
-        </p>
+      <div className="flex flex-col items-center justify-center h-full min-h-[60vh] gap-5 px-8">
+        <div className="w-16 h-16 rounded-2xl glass flex items-center justify-center text-3xl text-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.15)] animate-pulse">
+          ⇌
+        </div>
+        <div className="text-center space-y-1.5">
+          <h2 className="text-base font-semibold text-slate-300">
+            Pick a start and end town
+          </h2>
+          <p className="text-sm text-slate-400 max-w-xs">
+            Use the dropdowns above — routes load automatically.
+          </p>
+        </div>
       </div>
     );
   }
 
-  // ── Error ──
   if (!loading && error) {
     return (
       <div className="p-6">
-        <div className="glass rounded-xl p-5 border-red-800/40 border">
+        <div
+          className="card p-5"
+          style={{ borderColor: "rgb(127 29 29 / 0.5)" }}
+        >
           <p className="text-red-400 font-semibold text-sm">⚠ {error}</p>
         </div>
       </div>
     );
   }
 
-  const TABS: { key: RouteMode; label: string; icon: string }[] = [
-    { key: "shortest", label: "Shortest Distance", icon: "📏" },
-    { key: "fastest",  label: "Fastest Time",      icon: "⚡" },
-    { key: "top3",     label: "Top 3 + Cost",      icon: "🏆" },
+  const MODES: { key: RouteMode; label: string; icon: string }[] = [
+    { key: "shortest", label: "Shortest", icon: "" },
+    { key: "fastest", label: "Fastest", icon: "" },
+    { key: "top3", label: "Top 3", icon: "" },
   ];
 
   return (
-    <div className="p-5 space-y-4">
-
-      {/* ── Route heading ── */}
-      <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-slate-200 text-sm">
-          <span className="text-slate-400">{from}</span>
-          <span className="mx-2 text-slate-600">→</span>
-          <span className="text-slate-400">{to}</span>
-          {loading && <span className="ml-2 text-xs text-amber-500 animate-pulse">Searching…</span>}
-        </h2>
-        {/* Show stop count for active route */}
-        {!loading && shortest && (
-          <span className="text-xs text-slate-500">
-            {shortest.path.length - 1} leg{shortest.path.length !== 2 ? "s" : ""}
+    <div className="p-5 space-y-4 max-w-3xl">
+      {/* Heading */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-2 text-sm">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
+            <span className="font-medium text-slate-300">{from}</span>
+          </span>
+          <span className="text-slate-500">→</span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
+            <span className="font-medium text-slate-300">{to}</span>
+          </span>
+        </div>
+        {loading && (
+          <span className="text-xs text-amber-500 animate-pulse">
+            Calculating…
           </span>
         )}
       </div>
 
-      {/* ── Mode tabs ── */}
-      <div className="flex gap-0 border-b border-slate-800">
-        {TABS.map(({ key, label, icon }) => (
+      {/* Mode picker */}
+      <div className="flex gap-1 p-1 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl w-fit shadow-lg">
+        {MODES.map(({ key, label, icon }) => (
           <button
             key={key}
             onClick={() => setMode(key)}
-            className={`px-4 py-2.5 text-xs font-semibold flex items-center gap-1.5 transition-all border-b-2 -mb-px ${
+            className={`px-4 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all duration-300 ${
               mode === key
-                ? "border-amber-500 text-amber-400"
-                : "border-transparent text-slate-500 hover:text-slate-300"
+                ? "bg-white/10 border border-white/20 text-white shadow-[0_4px_12px_rgba(0,0,0,0.5)] transform scale-105"
+                : "text-slate-400 hover:text-slate-200 hover:bg-white/5 transparent border border-transparent"
             }`}
           >
-            <span>{icon}</span>{label}
+            <span className="text-sm">{icon}</span>
+            {label}
           </button>
         ))}
       </div>
 
-      {/* ── Content ── */}
+      {/* Content */}
       {loading ? (
         <div className="space-y-3">
-          <SkeletonCard /><SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
         </div>
       ) : (
         <div className="fade-in">
-          {mode === "shortest" && shortest && <SingleRouteCard route={shortest} label="Shortest Distance" icon="📏" accent="blue" />}
-          {mode === "fastest"  && fastest  && <SingleRouteCard route={fastest}  label="Fastest Time"      icon="⚡" accent="purple" />}
-          {mode === "top3"     && top3     && <Top3Cards result={top3} onHighlight={onRouteHighlight} />}
-          {((mode === "shortest" && !shortest) || (mode === "fastest" && !fastest) || (mode === "top3" && !top3)) && !loading && (
-            <p className="text-slate-500 text-sm">No results for this route type.</p>
-          )}
+          {mode === "shortest" &&
+            (shortest ? (
+              <SingleRouteCard
+                route={shortest}
+                label="Shortest Distance"
+                accent="blue"
+              />
+            ) : (
+              <EmptyResult />
+            ))}
+          {mode === "fastest" &&
+            (fastest ? (
+              <SingleRouteCard
+                route={fastest}
+                label="Fastest Time"
+                accent="purple"
+              />
+            ) : (
+              <EmptyResult />
+            ))}
+          {mode === "top3" &&
+            (top3 ? (
+              <Top3Cards result={top3} onHighlight={onRouteHighlight} />
+            ) : (
+              <EmptyResult />
+            ))}
         </div>
       )}
     </div>
   );
 }
 
-// ────────────────────────────────────────────────
-//  Single route card (shortest / fastest)
-// ────────────────────────────────────────────────
-const ACCENT_COLORS: Record<string, { badge: string; heading: string; border: string }> = {
-  blue:   { badge: "bg-blue-950  text-blue-300  border-blue-800",   heading: "text-blue-400",   border: "border-blue-900/40" },
-  purple: { badge: "bg-purple-950 text-purple-300 border-purple-800", heading: "text-purple-400", border: "border-purple-900/40" },
-  amber:  { badge: "bg-amber-950 text-amber-300  border-amber-800",  heading: "text-amber-400",  border: "border-amber-900/40" },
-  green:  { badge: "bg-green-950 text-green-300  border-green-800",  heading: "text-green-400",  border: "border-green-900/40" },
+const ACCENTS: Record<string, { dot: string; label: string }> = {
+  blue: { dot: "bg-blue-500", label: "text-blue-400" },
+  purple: { dot: "bg-purple-500", label: "text-purple-400" },
+  green: { dot: "bg-green-500", label: "text-green-400" },
 };
 
 function SingleRouteCard({
-  route, label, icon, accent,
-}: { route: SingleRoute; label: string; icon: string; accent: string }) {
-  const c = ACCENT_COLORS[accent] ?? ACCENT_COLORS.blue;
-  const distCost = ((route.totalDistance / 8) * 11.95).toFixed(2);
+  route,
+  label,
+  accent,
+}: {
+  route: SingleRoute;
+  label: string;
+  accent: string;
+}) {
+  const c = ACCENTS[accent] ?? ACCENTS.blue;
+  const fuelCost = ((route.totalDistance / 8) * 11.95).toFixed(2);
   const timeCost = (route.totalTime * 0.5).toFixed(2);
-  const totalCost = ((route.totalDistance / 8) * 11.95 + route.totalTime * 0.5).toFixed(2);
+  const totalCost = (
+    (route.totalDistance / 8) * 11.95 +
+    route.totalTime * 0.5
+  ).toFixed(2);
   return (
-    <div className={`glass rounded-xl border ${c.border} p-5 space-y-4 hover-lift`}>
+    <div className="card hover-lift p-5 space-y-4">
       <div className="flex items-center gap-2">
-        <span className={`text-xs font-bold px-2 py-0.5 rounded border ${c.badge}`}>{icon} {label}</span>
+        <span className={`w-2 h-2 rounded-full ${c.dot}`} />
+        <span className={`text-xs font-semibold ${c.label}`}>{label}</span>
+        <span className="ml-auto text-xs text-slate-400">
+          {route.path.length - 1} legs
+        </span>
       </div>
-      <PathChain path={route.path} highlight />
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1">
+      <PathChain path={route.path} />
+      <div className="grid grid-cols-3 gap-3">
         <Stat label="Distance" value={`${route.totalDistance} km`} />
-        <Stat label="Travel Time" value={`${route.totalTime} min`} />
-        <Stat label="Stops" value={`${route.path.length - 1}`} sub="legs" />
-        <Stat label="Fuel Cost" value={`GHS ${distCost}`} sub="@8km/L · GHS11.95/L" />
-        <Stat label="Time Cost" value={`GHS ${timeCost}`} sub="@GHS 0.50/min" />
-        <Stat label="Total Cost" value={`GHS ${totalCost}`} />
+        <Stat label="Time" value={`${route.totalTime} min`} />
+        <Stat label="Stops" value={route.path.length - 1} />
+      </div>
+      <div className="border-t border-white/10 pt-4">
+        <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-3">
+          Cost estimate
+        </p>
+        <div className="grid grid-cols-3 gap-3">
+          <Stat label="Fuel" value={`GHS ${fuelCost}`} />
+          <Stat label="Time cost" value={`GHS ${timeCost}`} />
+          <Stat label="Total" value={`GHS ${totalCost}`} highlight />
+        </div>
+        <p className="text-[10px] text-slate-400 mt-2">
+          ⛽ 8 km/L · GHS 11.95/L · ⏱ GHS 0.50/min
+        </p>
       </div>
     </div>
   );
 }
 
-// ────────────────────────────────────────────────
-//  Top 3 cards
-// ────────────────────────────────────────────────
-function Top3Cards({ result, onHighlight }: { result: Top3Result; onHighlight: (p: string[]) => void }) {
+function Top3Cards({
+  result,
+  onHighlight,
+}: {
+  result: Top3Result;
+  onHighlight: (p: string[]) => void;
+}) {
   const [active, setActive] = useState(0);
   const rec = result.recommendation.rank - 1;
-
+  const RANK = [
+    { dot: "bg-amber-500", label: "text-amber-400" },
+    { dot: "bg-slate-500", label: "text-slate-400" },
+    { dot: "bg-slate-500", label: "text-slate-300" },
+  ];
   return (
     <div className="space-y-3">
-      {/* Quick-pick bar */}
-      <div className="flex gap-2">
+      <div className="flex gap-1.5">
         {result.routes.map((r, i) => (
           <button
             key={i}
-            onClick={() => { setActive(i); onHighlight(r.path); }}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+            onClick={() => {
+              setActive(i);
+              onHighlight(r.path);
+            }}
+            className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold border transition-all duration-300 ${
               active === i
-                ? "bg-slate-700 border-slate-500 text-slate-100"
-                : "border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-300"
+                ? "bg-white/10 border-white/30 text-white shadow-[0_4px_15px_rgba(0,0,0,0.3)] transform scale-105"
+                : "border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/5"
             }`}
           >
-            Route #{r.rank}
-            {i === rec && <span className="ml-1 text-green-400">★</span>}
+            Route {r.rank}
+            {i === rec ? " ★" : ""}
           </button>
         ))}
       </div>
 
-      {/* Active route detail */}
       {result.routes.map((r, i) => {
         if (i !== active) return null;
         const isRec = i === rec;
+        const s = RANK[i] ?? RANK[2];
         return (
-          <div
-            key={i}
-            className={`glass rounded-xl border p-5 space-y-4 hover-lift ${
-              isRec ? "border-green-800/50" : "border-slate-800/50"
-            }`}
-          >
+          <div key={i} className="card hover-lift p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-sm font-semibold text-slate-200">
-                <span className={`w-6 h-6 rounded-full text-xs flex items-center justify-center font-bold ${
-                  i === 0 ? "bg-amber-500 text-gray-900"
-                          : i === 1 ? "bg-slate-500 text-white"
-                          : "bg-slate-700 text-slate-300"
-                }`}>{r.rank}</span>
-                Route #{r.rank}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${s.dot}`} />
+                <span className={`text-xs font-semibold ${s.label}`}>
+                  Route #{r.rank}
+                </span>
+              </div>
               {isRec && (
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded border bg-green-950 text-green-300 border-green-800">
-                  ★ RECOMMENDED
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-green-950/60 text-green-400 border border-green-900/50">
+                  ★ Recommended
                 </span>
               )}
             </div>
-            <PathChain path={r.path} highlight={isRec} />
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1">
-              <Stat label="Distance"    value={`${r.totalDistance} km`} />
-              <Stat label="Travel Time" value={`${r.totalTime} min`} />
-              <Stat label="Stops"       value={`${r.path.length - 1}`} sub="legs" />
-              <Stat label="Fuel Cost"   value={`GHS ${r.distanceCost.toFixed(2)}`} />
-              <Stat label="Time Cost"   value={`GHS ${r.timeCost.toFixed(2)}`} />
-              <Stat label="Total Cost"  value={`GHS ${r.totalCost.toFixed(2)}`} />
+            <PathChain path={r.path} />
+            <div className="grid grid-cols-3 gap-3">
+              <Stat label="Distance" value={`${r.totalDistance} km`} />
+              <Stat label="Time" value={`${r.totalTime} min`} />
+              <Stat label="Stops" value={r.path.length - 1} />
+            </div>
+            <div className="border-t border-white/10 pt-4">
+              <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-3 font-bold">
+                Cost estimate
+              </p>
+              <div className="grid grid-cols-3 gap-3">
+                <Stat label="Fuel" value={`GHS ${r.distanceCost.toFixed(2)}`} />
+                <Stat
+                  label="Time cost"
+                  value={`GHS ${r.timeCost.toFixed(2)}`}
+                />
+                <Stat
+                  label="Total"
+                  value={`GHS ${r.totalCost.toFixed(2)}`}
+                  highlight
+                />
+              </div>
             </div>
           </div>
         );
       })}
 
-      {/* Summary comparison bar */}
-      <div className="glass rounded-xl p-4 space-y-2">
-        <p className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-2">Quick Comparison</p>
-        <div className="divide-y divide-slate-800">
+      <div className="card p-4">
+        <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold mb-3">
+          Comparison
+        </p>
+        <div className="space-y-0.5">
+          <div className="grid grid-cols-4 gap-2 text-[10px] text-slate-400 px-2 pb-1.5 border-b border-[#1a2332]">
+            <span>Route</span>
+            <span>Distance</span>
+            <span>Time</span>
+            <span>Total</span>
+          </div>
           {result.routes.map((r, i) => (
             <button
               key={i}
-              onClick={() => { setActive(i); onHighlight(r.path); }}
-              className={`w-full grid grid-cols-4 gap-2 py-2 text-xs text-left transition-colors rounded px-1
-                          ${active === i ? "text-slate-100" : "text-slate-500 hover:text-slate-300"}`}
+              onClick={() => {
+                setActive(i);
+                onHighlight(r.path);
+              }}
+              className={`w-full grid grid-cols-4 gap-2 py-1.5 px-2 text-xs rounded-lg transition-colors ${
+                active === i
+                  ? "bg-[#111827] text-slate-100"
+                  : "text-slate-300 hover:text-slate-100"
+              }`}
             >
-              <span className="font-semibold">{i === rec ? "★ " : ""}Route #{r.rank}</span>
+              <span className="font-medium">
+                {i === rec ? "★ " : ""}#{r.rank}
+              </span>
               <span>{r.totalDistance} km</span>
               <span>{r.totalTime} min</span>
-              <span className={i === rec ? "text-green-400 font-bold" : ""}>GHS {r.totalCost.toFixed(2)}</span>
+              <span className={i === rec ? "text-green-400 font-semibold" : ""}>
+                GHS {r.totalCost.toFixed(0)}
+              </span>
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-4 gap-2 text-[10px] text-slate-600 px-1">
-          <span>Route</span><span>Distance</span><span>Time</span><span>Total Cost</span>
-        </div>
+        <p className="text-[10px] text-slate-400 mt-2.5">
+          ★ {result.recommendation.reason}
+        </p>
       </div>
-
-      <p className="text-[10px] text-slate-600 px-1">
-        ★ Recommended: {result.recommendation.reason} · ⛽ 8km/L · GHS 11.95/L · ⏱ GHS 0.50/min
-      </p>
     </div>
   );
 }
