@@ -113,6 +113,8 @@ After deduplication, the graph holds the correct set of unique bidirectional roa
 
 This mode runs the full question sequence — loading the graph, running path queries, printing results, launching the interactive menu, and outputting the complexity analysis.
 
+> Note: CLI compilation excludes `src/api/*` on purpose. Those files are Spring Boot classes and require Maven-managed dependencies.
+
 **Using the script (requires bash):**
 
 ```bash
@@ -124,7 +126,7 @@ chmod +x build_and_run.sh
 
 ```bash
 mkdir -p out
-find src -name "*.java" | xargs javac --release 17 -d out
+find src -name "*.java" ! -path "src/api/*" | xargs javac -encoding UTF-8 --release 17 -d out
 java -cp out Main data/ghana_cities_graph_2026.txt
 ```
 
