@@ -1,0 +1,557 @@
+Abeka, Dansoman, 220, 237
+Abeka, Labadi, 88, 88
+Abeka, Nungua, 288, 314
+Aboso, Asankragwa, 266, 251
+Aboso, Ashaiman, 153, 143
+Aburi, Amasaman, 269, 206
+Aburi, Manso Nkwanta, 218, 247
+Aburi, Wassa Akropong, 204, 276
+Accra, Berekum, 102, 120
+Accra, Osu, 82, 126
+Accra, Sogakope, 202, 177
+Accra, Tema, 316, 307
+Achiase, Asokore Mampong, 138, 143
+Achiase, Kade, 228, 189
+Achiase, Tafo, 315, 269
+Achiase, Tumu, 274, 249
+Achimota, Juaso, 185, 143
+Achimota, Legon, 79, 85
+Achimota, Nalerigu, 186, 209
+Achimota, Sunyani, 153, 137
+Ada Foah, Anloga, 149, 121
+Ada Foah, Kukuom, 85, 74
+Ada Foah, Sefwi Akontombra, 252, 208
+Adenta, Abeka, 262, 261
+Adenta, Agona Asafo, 152, 136
+Adenta, Apowa, 126, 100
+Adenta, Somanya, 83, 88
+Aflao, Denu, 97, 103
+Aflao, Kukuom, 159, 226
+Aflao, Nandom, 139, 130
+Agbobloshie, Fomena, 36, 35
+Agbobloshie, Kaneshie, 162, 125
+Agogo, Akyem Tafo, 139, 119
+Agogo, Juaso, 180, 166
+Agona Asafo, Bawjiase, 323, 321
+Agona Asafo, Half Assini, 165, 178
+Agona Nkwanta, Achiase, 271, 247
+Agona Nkwanta, Shama, 337, 246
+Agona Nkwanta, Tumu, 329, 316
+Akim Swedru, Agona Asafo, 64, 75
+Akim Swedru, Breman Asikuma, 90, 104
+Akim Swedru, Oda, 156, 176
+Akosombo, Akwatia, 112, 88
+Akosombo, Prampram, 288, 295
+Akropong, Aburi, 53, 42
+Akropong, Akyem Oda, 59, 44
+Akropong, Ashaiman, 43, 58
+Akropong, Legon, 205, 237
+Akwatia, Akyem Oda, 73, 60
+Akwatia, Nkawkaw, 107, 119
+Akwatia, Nkwanta, 374, 337
+Akwatia, Winneba, 86, 100
+Akyem Oda, Akwatia, 344, 336
+Akyem Oda, Akyem Tafo, 135, 103
+Akyem Oda, Kasoa, 196, 163
+Akyem Oda, Manso Adubia, 231, 259
+Akyem Tafo, Kintampo, 274, 236
+Akyem Tafo, Somanya, 48, 54
+Amasaman, Asokwa, 59, 54
+Amasaman, Dodowa, 147, 150
+Amasaman, Kete Krachi, 132, 109
+Amasaman, Tarkwa, 83, 105
+Amedzofe, Agona Asafo, 215, 210
+Amedzofe, Berekum, 261, 270
+Amedzofe, Kasoa, 196, 213
+Amedzofe, Tolon, 348, 388
+Anloga, Konongo, 251, 246
+Anloga, Suhum, 126, 128
+Anloga, Tamale, 165, 177
+Apam, Kunkua, 112, 115
+Apam, Winneba, 185, 182
+Apowa, Cape Coast, 103, 112
+Apowa, Inchaban, 103, 111
+Asamankese, Akim Swedru, 154, 235
+Asamankese, Dormaa Ahenkro, 143, 169
+Asamankese, Nalerigu, 134, 132
+Asankragwa, Ashaiman, 427, 412
+Asankragwa, Mankessim, 156, 171
+Asankragwa, Wassa Akropong, 240, 267
+Asesewa, Aflao, 362, 325
+Asesewa, Dambai, 247, 279
+Asesewa, Manso Adubia, 255, 250
+Ashaiman, Kasoa, 287, 316
+Ashaiman, Nalerigu, 118, 106
+Ashaiman, Tema, 50, 72
+Ashaiman, Wenchi, 356, 335
+Asiwa, Dadieso, 70, 111
+Asiwa, Kukuom, 163, 184
+Asiwa, Sawla, 106, 86
+Asiwa, Tarkwa, 58, 64
+Asokore Mampong, Amedzofe, 227, 285
+Asokore Mampong, Sunyani, 360, 474
+Asokore Mampong, Tumu, 185, 196
+Asokwa, Asokore Mampong, 204, 178
+Asokwa, Kaneshie, 330, 366
+Asokwa, Nkonya, 149, 142
+Assin Fosu, Accra, 371, 486
+Assin Fosu, Shama, 206, 230
+Assin Fosu, Twifo Praso, 103, 100
+Atimpoku, Aboso, 144, 134
+Atimpoku, Akyem Oda, 44, 51
+Atimpoku, Tongo, 301, 405
+Awutu Breku, Atimpoku, 109, 99
+Awutu Breku, Senya Beraku, 274, 321
+Axim, Elubo, 100, 125
+Axim, Hohoe, 81, 120
+Bawjiase, Buduburam, 197, 173
+Bawjiase, Zebilla, 152, 155
+Bawku, Nalerigu, 142, 163
+Bawku, Paga, 152, 153
+Bawku, Tolon, 245, 228
+Bawku, Yeji, 101, 101
+Bechem, Dansoman, 194, 298
+Bechem, Kintampo, 282, 275
+Bechem, Kojokrom, 89, 92
+Begoro, Agogo, 112, 82
+Begoro, Asamankese, 278, 207
+Bekwai, Agogo, 144, 156
+Bekwai, Gomoa Fetteh, 85, 93
+Beposo, Asiwa, 219, 234
+Beposo, Breman Asikuma, 46, 63
+Beposo, Sefwi Bekwai, 74, 73
+Berekum, Apam, 283, 479
+Berekum, Daboya, 158, 223
+Berekum, Kadjebi, 206, 207
+Berekum, Wenchi, 53, 60
+Bibiani, Cape Coast, 114, 96
+Bibiani, Denu, 42, 48
+Bibiani, Juaso, 236, 255
+Bibiani, Nkroful, 144, 174
+Bimbilla, Gomoa Fetteh, 73, 62
+Bimbilla, Savelugu, 84, 67
+Bogoso, Agogo, 234, 244
+Bogoso, Axim, 161, 163
+Bogoso, Esiama, 92, 95
+Bogoso, Sefwi Bekwai, 79, 115
+Bole, Akwatia, 298, 325
+Bole, Duayaw Nkwanta, 109, 186
+Bole, Mampong, 290, 281
+Bole, Sawla, 304, 311
+Bolgatanga, Asamankese, 125, 111
+Bolgatanga, Ho, 347, 288
+Bolgatanga, Navrongo, 103, 117
+Bolgatanga, Weija, 144, 160
+Bongo, Manso Nkwanta, 333, 357
+Bongo, Zebilla, 269, 246
+Breman Asikuma, Diaso, 375, 479
+Breman Asikuma, Drobonso, 125, 171
+Breman Asikuma, Sefwi Wiawso, 69, 53
+Buduburam, Akropong, 81, 76
+Buduburam, Damongo, 61, 55
+Buduburam, Odupongkpehe, 206, 213
+Buipe, Bolgatanga, 124, 118
+Buipe, Kumasi, 365, 347
+Buipe, Yendi, 165, 166
+Cape Coast, Elmina, 102, 95
+Cape Coast, Sandema, 100, 142
+Chiana, Akwatia, 255, 227
+Chiana, Sirigu, 87, 95
+Chiana, Wenchi, 123, 173
+Chinderi, Agbobloshie, 150, 174
+Chinderi, Nandom, 225, 268
+Chinderi, Nkonya, 201, 216
+Daboya, Akropong, 168, 161
+Daboya, Asankragwa, 211, 219
+Dadieso, Bibiani, 323, 325
+Dadieso, Sefwi Wiawso, 182, 254
+Dambai, Asokore Mampong, 406, 452
+Dambai, Kadjebi, 229, 232
+Damongo, Asokore Mampong, 440, 356
+Damongo, Awutu Breku, 137, 147
+Damongo, Kpeve, 232, 354
+Damongo, Salaga, 141, 231
+Dansoman, Hamile, 263, 200
+Dansoman, Osu, 249, 214
+Denu, Beposo, 262, 307
+Denu, Sogakope, 98, 118
+Denu, Yeji, 253, 224
+Diaso, Buduburam, 79, 109
+Diaso, Dzodze, 47, 40
+Diaso, Eguafo, 133, 176
+Dodowa, Kukuom, 123, 128
+Dodowa, Prampram, 266, 215
+Dormaa Ahenkro, Akosombo, 169, 189
+Dormaa Ahenkro, Bechem, 333, 260
+Drobo, Kasoa, 116, 102
+Drobo, Offinso, 160, 222
+Drobo, Sandema, 100, 98
+Drobo, Yeji, 141, 121
+Drobonso, Beposo, 66, 71
+Drobonso, Goaso, 76, 88
+Drobonso, Nkwanta, 108, 120
+Drobonso, Tafo, 134, 126
+Duayaw Nkwanta, Agona Nkwanta, 205, 157
+Duayaw Nkwanta, Drobo, 201, 191
+Dunkwa-on-Offin, Drobonso, 159, 149
+Dunkwa-on-Offin, Odupongkpehe, 74, 104
+Dunkwa-on-Offin, Sefwi Wiawso, 425, 538
+Dzodze, Anloga, 179, 189
+Dzodze, Kumasi, 360, 326
+Dzodze, Nyinahin, 194, 180
+Dzodze, Odupongkpehe, 216, 184
+Effiduase, Mpohor, 352, 395
+Effiduase, Nkonya, 98, 101
+Effiduase, Oda, 132, 98
+Effiduase, Tolon, 325, 297
+Eguafo, Accra, 111, 92
+Eguafo, Effiduase, 283, 370
+Ejisu, Abeka, 211, 153
+Ejisu, Mampong, 125, 97
+Ejisu, Sogakope, 95, 84
+Elmina, Aburi, 194, 163
+Elmina, Komenda, 261, 227
+Elmina, Tolon, 112, 91
+Elmina, Yendi, 180, 152
+Elubo, Half Assini, 305, 382
+Elubo, Manso Nkwanta, 267, 251
+Enchi, Dadieso, 109, 141
+Enchi, Keta, 73, 104
+Enchi, Nsuta, 132, 129
+Enchi, Sirigu, 99, 100
+Esiama, Funsi, 330, 302
+Esiama, Mpohor, 212, 318
+Esiama, Senya Beraku, 294, 299
+Fomena, Amedzofe, 237, 249
+Fomena, Koforidua, 122, 150
+Fomena, New Edubiase, 206, 202
+Fomena, Tarkwa, 137, 132
+Funsi, Gwollu, 170, 181
+Funsi, Kumasi, 73, 77
+Funsi, Lawra, 183, 151
+Gambaga, Asokore Mampong, 317, 333
+Gambaga, Bimbilla, 141, 127
+Gambaga, Nalerigu, 120, 145
+Goaso, Kaleo, 227, 226
+Goaso, Koforidua, 65, 75
+Goaso, Konongo, 135, 168
+Goaso, Sampa, 367, 357
+Gomoa Eshiem, Aboso, 145, 126
+Gomoa Eshiem, Bole, 148, 114
+Gomoa Fetteh, Buduburam, 114, 124
+Gomoa Fetteh, Gomoa Eshiem, 171, 213
+Gomoa Fetteh, Wassa Akropong, 294, 316
+Gwollu, Bibiani, 74, 84
+Gwollu, Kaleo, 149, 151
+Gwollu, Takoradi, 205, 191
+Half Assini, Cape Coast, 201, 190
+Half Assini, Nkroful, 42, 55
+Half Assini, Tolon, 339, 359
+Hamile, Goaso, 81, 74
+Hamile, Kumasi, 247, 179
+Hamile, Tafo, 177, 189
+Hamile, Zebilla, 84, 94
+Ho, Hohoe, 354, 342
+Ho, Swedru, 84, 73
+Hohoe, Bongo, 64, 69
+Hohoe, Dodowa, 201, 207
+Hohoe, Keta, 172, 183
+Inchaban, Gambaga, 224, 216
+Inchaban, Kansaworodo, 119, 148
+Inchaban, Legon, 54, 74
+Inchaban, Sefwi Bekwai, 258, 224
+Jasikan, Ada Foah, 75, 79
+Jasikan, Agogo, 77, 77
+Jasikan, Damongo, 186, 172
+Jasikan, Nkwanta, 141, 127
+Jirapa, Dodowa, 157, 211
+Jirapa, Nalerigu, 149, 160
+Jirapa, Nandom, 115, 129
+Juaso, Akwatia, 88, 71
+Juaso, Kade, 228, 244
+Juaso, Nkawie, 71, 76
+Juaso, Peki, 63, 59
+Kade, Begoro, 99, 85
+Kade, Bibiani, 209, 204
+Kadjebi, Denu, 262, 287
+Kadjebi, Kete Krachi, 213, 261
+Kaleo, Bongo, 107, 129
+Kaleo, Obuasi, 255, 350
+Kaneshie, Mallam, 207, 213
+Kaneshie, Navrongo, 192, 182
+Kansaworodo, Agbobloshie, 212, 153
+Kansaworodo, Damongo, 382, 416
+Kasoa, Enchi, 160, 156
+Kasoa, Tolon, 196, 207
+Kasoa, Weija, 158, 229
+Kasoa, Wenchi, 114, 116
+Keta, Aflao, 66, 66
+Keta, Damongo, 192, 151
+Keta, Saltpond, 48, 44
+Kete Krachi, Buduburam, 91, 91
+Kete Krachi, Chinderi, 368, 378
+Kete Krachi, Gambaga, 290, 207
+Kete Krachi, Techiman, 213, 310
+Kintampo, Kojokrom, 412, 406
+Kintampo, Konongo, 133, 106
+Kintampo, Kumasi, 261, 234
+Kintampo, Nkoranza, 208, 225
+Koforidua, Agbobloshie, 185, 194
+Koforidua, Akosombo, 297, 224
+Koforidua, Asokore Mampong, 83, 117
+Kojokrom, Apowa, 335, 369
+Kojokrom, Asiwa, 219, 280
+Komenda, Mankessim, 65, 70
+Komenda, Wenchi, 124, 163
+Konongo, Accra, 358, 255
+Konongo, Bogoso, 67, 66
+Konongo, Ejisu, 35, 49
+Konongo, Kansaworodo, 127, 111
+Kpandai, Akwatia, 448, 546
+Kpandai, Akyem Oda, 267, 267
+Kpandai, Bole, 247, 247
+Kpandai, Paga, 310, 294
+Kpando, Jasikan, 84, 108
+Kpando, Peki, 206, 168
+Kpeve, Amedzofe, 49, 60
+Kpeve, Ho, 381, 363
+Kpeve, Nsawam, 265, 303
+Kukuom, Asesewa, 376, 328
+Kukuom, Duayaw Nkwanta, 93, 90
+Kukuom, Kaneshie, 152, 139
+Kumasi, Apam, 169, 174
+Kumasi, Gambaga, 94, 98
+Kumasi, Obuasi, 53, 57
+Kumasi, Wa, 348, 312
+Kumawu, Drobonso, 76, 102
+Kumawu, Funsi, 155, 161
+Kumawu, Tarkwa, 67, 61
+Kunkua, Drobo, 315, 243
+Kunkua, Dunkwa-on-Offin, 141, 151
+Kunkua, Kpeve, 64, 77
+Kunkua, Nsuta, 69, 65
+Labadi, Awutu Breku, 82, 127
+Labadi, Nungua, 161, 141
+Labadi, Osu, 160, 159
+Labadi, Wa, 36, 43
+Lawra, Jirapa, 353, 333
+Lawra, Nkoranza, 262, 298
+Lawra, Sogakope, 103, 102
+Legon, Denu, 57, 52
+Legon, Funsi, 179, 171
+Legon, Swedru, 239, 261
+Legon, Teshie, 130, 125
+Madina, Adenta, 221, 218
+Madina, Aflao, 364, 358
+Mallam, Achimota, 171, 265
+Mallam, Fomena, 49, 55
+Mallam, Half Assini, 250, 263
+Mallam, Kukuom, 103, 95
+Mampong, Bekwai, 193, 167
+Mampong, Suhum, 130, 146
+Mampong, Takoradi, 286, 267
+Mankessim, Atimpoku, 163, 194
+Mankessim, Juaso, 238, 178
+Mankessim, Saltpond, 94, 90
+Manso Adubia, Asiwa, 121, 135
+Manso Adubia, Denu, 279, 277
+Manso Adubia, Teshie, 214, 245
+Manso Nkwanta, Asankragwa, 51, 50
+Manso Nkwanta, Manso Adubia, 272, 279
+Manso Nkwanta, Navrongo, 152, 116
+Mpohor, Achiase, 91, 85
+Mpohor, Nkawkaw, 271, 301
+Nalerigu, Damongo, 148, 162
+Nalerigu, Juaso, 90, 99
+Nandom, Asokore Mampong, 124, 140
+Nandom, Tumu, 239, 291
+Navrongo, Bawku, 154, 145
+Navrongo, Gambaga, 203, 213
+New Edubiase, Effiduase, 268, 375
+New Edubiase, Weija, 143, 148
+Nkawie, Dzodze, 85, 133
+Nkawie, Offinso, 224, 227
+Nkawkaw, Atimpoku, 102, 97
+Nkawkaw, Gwollu, 361, 522
+Nkawkaw, Legon, 155, 167
+Nkawkaw, Nkoranza, 62, 81
+Nkonya, Enchi, 120, 143
+Nkonya, Jirapa, 40, 53
+Nkonya, Nyinahin, 333, 428
+Nkonya, Peki, 233, 275
+Nkoranza, Goaso, 230, 158
+Nkoranza, Nkawkaw, 79, 107
+Nkroful, Enchi, 237, 172
+Nkroful, Nsawam, 378, 274
+Nkroful, Sefwi Akontombra, 236, 229
+Nkwanta, Dzodze, 117, 150
+Nkwanta, Techiman, 232, 280
+Nkwanta, Zebilla, 99, 79
+Nsawam, Aflao, 102, 104
+Nsawam, Ho, 190, 201
+Nsawam, Suhum, 78, 62
+Nsuta, Kpando, 141, 129
+Nsuta, Labadi, 145, 155
+Nsuta, Manso Nkwanta, 76, 82
+Nungua, Agona Asafo, 159, 156
+Nungua, Beposo, 285, 279
+Nungua, Kunkua, 258, 326
+Nungua, Teshie, 306, 257
+Nyinahin, Kukuom, 118, 153
+Nyinahin, Mankessim, 100, 81
+Nyinahin, Toase, 113, 152
+Nyinahin, Wa, 367, 412
+Obuasi, Amedzofe, 203, 271
+Obuasi, Konongo, 196, 187
+Oda, Mallam, 206, 164
+Oda, Nsuta, 340, 490
+Oda, Tafo, 63, 56
+Odupongkpehe, Awutu Breku, 109, 133
+Odupongkpehe, Breman Asikuma, 204, 306
+Odupongkpehe, Kpandai, 182, 170
+Odupongkpehe, Madina, 104, 91
+Offinso, Asokwa, 156, 141
+Offinso, Bawjiase, 146, 149
+Offinso, Esiama, 81, 69
+Offinso, Salaga, 406, 434
+Osu, Labadi, 255, 249
+Osu, Tafo, 103, 134
+Paga, Agona Nkwanta, 80, 122
+Paga, Akosombo, 303, 320
+Paga, Sandema, 326, 281
+Paga, Swedru, 240, 283
+Peki, Asokore Mampong, 425, 433
+Peki, Begoro, 168, 223
+Peki, Kpeve, 157, 184
+Peki, Tafo, 51, 63
+Prampram, Ada Foah, 292, 266
+Prampram, Asokore Mampong, 27, 36
+Prampram, Bekwai, 109, 119
+Prampram, Tarkwa, 50, 76
+Prestea, Bogoso, 132, 149
+Prestea, Gomoa Eshiem, 155, 158
+Salaga, Buipe, 206, 193
+Salaga, Dunkwa-on-Offin, 68, 83
+Salaga, Kpandai, 185, 195
+Salaga, Wassa Akropong, 199, 205
+Saltpond, Apam, 47, 51
+Saltpond, Bawjiase, 174, 222
+Saltpond, Keta, 80, 64
+Sampa, Nungua, 140, 140
+Sampa, Takoradi, 196, 197
+Sandema, Nkawie, 166, 163
+Sandema, Nkonya, 34, 38
+Sandema, Sefwi Akontombra, 146, 168
+Sandema, Tongo, 308, 290
+Savelugu, Nsuta, 109, 111
+Savelugu, Tarkwa, 192, 219
+Savelugu, Tumu, 163, 166
+Savelugu, Walewale, 261, 280
+Sawla, Daboya, 104, 107
+Sawla, Gomoa Fetteh, 92, 98
+Sawla, Jasikan, 145, 174
+Sefwi Akontombra, Goaso, 202, 211
+Sefwi Akontombra, Prampram, 242, 220
+Sefwi Akontombra, Tarkwa, 186, 132
+Sefwi Akontombra, Wiawso, 136, 106
+Sefwi Bekwai, Fomena, 178, 179
+Sefwi Bekwai, Hamile, 305, 283
+Sefwi Bekwai, Suhum, 109, 119
+Sefwi Wiawso, Gambaga, 112, 133
+Sefwi Wiawso, Kade, 397, 346
+Sefwi Wiawso, Sandema, 228, 230
+Sefwi Wiawso, Sefwi Bekwai, 186, 149
+Sekondi, Tarkwa, 114, 114
+Sekondi, Wenchi, 322, 336
+Senya Beraku, Agona Asafo, 260, 318
+Senya Beraku, Gomoa Fetteh, 366, 495
+Senya Beraku, Teshie, 217, 190
+Senya Beraku, Walewale, 285, 322
+Shama, Assin Fosu, 110, 149
+Shama, Koforidua, 103, 153
+Shama, Salaga, 100, 115
+Sirigu, Bibiani, 124, 131
+Sirigu, Chiana, 80, 70
+Sirigu, Kunkua, 85, 88
+Sogakope, Bongo, 162, 156
+Sogakope, Kaneshie, 114, 126
+Sogakope, Kpando, 259, 238
+Sogakope, Nkawkaw, 247, 200
+Somanya, Ejisu, 338, 354
+Somanya, Ho, 348, 506
+Suhum, Elmina, 267, 323
+Suhum, Hohoe, 308, 337
+Suhum, Koforidua, 117, 120
+Sunyani, Eguafo, 125, 133
+Sunyani, Lawra, 176, 140
+Sunyani, Techiman, 170, 197
+Sunyani, Toase, 124, 116
+Swedru, Agona Nkwanta, 239, 368
+Swedru, Sefwi Bekwai, 116, 106
+Tafo, Asesewa, 202, 190
+Tafo, Asiwa, 149, 164
+Tafo, Buduburam, 68, 54
+Tafo, Madina, 349, 555
+Takoradi, Dambai, 154, 175
+Takoradi, Nkawkaw, 193, 186
+Takoradi, Sekondi, 131, 156
+Tamale, Tarkwa, 159, 200
+Tamale, Yendi, 340, 276
+Tarkwa, Amedzofe, 229, 221
+Tarkwa, Kade, 133, 164
+Tarkwa, Prestea, 163, 175
+Tarkwa, Tumu, 135, 130
+Techiman, Berekum, 254, 222
+Techiman, Dunkwa-on-Offin, 256, 236
+Techiman, Kukuom, 266, 264
+Tema, Madina, 132, 102
+Tema, Obuasi, 285, 224
+Teshie, Aburi, 179, 225
+Teshie, Ashaiman, 153, 146
+Teshie, Kumasi, 165, 134
+Toase, Akwatia, 54, 72
+Toase, Asiwa, 187, 186
+Toase, Kumawu, 119, 179
+Tolon, Kpandai, 20, 24
+Tolon, Suhum, 148, 138
+Tongo, Kpando, 56, 56
+Tongo, Madina, 161, 178
+Tongo, Wa, 79, 81
+Tongo, Yeji, 374, 400
+Tumu, Denu, 154, 123
+Tumu, Hamile, 63, 56
+Tumu, Navrongo, 78, 64
+Tumu, Tafo, 416, 430
+Twifo Praso, Bechem, 392, 329
+Twifo Praso, Dodowa, 392, 399
+Twifo Praso, Dunkwa-on-Offin, 148, 156
+Wa, Chiana, 158, 193
+Wa, Kpeve, 309, 264
+Wa, Lawra, 218, 213
+Wa, Sunyani, 317, 358
+Walewale, Chiana, 196, 205
+Walewale, Gambaga, 308, 347
+Walewale, Twifo Praso, 152, 155
+Wassa Akropong, Kojokrom, 262, 334
+Wassa Akropong, Nandom, 102, 85
+Wassa Akropong, Yeji, 191, 172
+Weija, Hamile, 102, 93
+Weija, Nsawam, 175, 182
+Wenchi, Dormaa Ahenkro, 185, 182
+Wenchi, Jasikan, 89, 86
+Wenchi, Juaso, 51, 62
+Wiawso, Esiama, 137, 141
+Wiawso, Madina, 144, 158
+Winneba, Adenta, 179, 205
+Winneba, Ho, 300, 372
+Winneba, Mampong, 55, 61
+Winneba, Swedru, 177, 186
+Yeji, Accra, 124, 169
+Yeji, Kete Krachi, 134, 139
+Yeji, Nyinahin, 53, 62
+Yeji, Sawla, 47, 72
+Yendi, Akosombo, 194, 177
+Yendi, Bimbilla, 96, 78
+Yendi, Sunyani, 330, 383
+Zebilla, Chiana, 248, 223
+Zebilla, Dunkwa-on-Offin, 334, 305
