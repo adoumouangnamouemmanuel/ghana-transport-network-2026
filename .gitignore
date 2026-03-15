@@ -5,6 +5,7 @@ target/
 !**/src/test/**/out/
 .kotlin
 .idea/
+.mvn-dist/
 
 ### Eclipse ###
 .apt_generated
