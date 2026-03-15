@@ -5,6 +5,7 @@ target/
 !**/src/test/**/out/
 .kotlin
 .idea/
+**/.idea/
 .mvn-dist/
 
 ### Eclipse ###
