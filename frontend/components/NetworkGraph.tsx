@@ -38,12 +38,6 @@ type ApiTopRoute = {
   totalCost?: number;
 };
 
-type NodeInfo = {
-  id: string;
-  degree: number;
-  neighbors: Array<{ name: string; dist: number; time: number }>;
-};
-
 const TOP_ROUTE_COLORS = ["#f59e0b", "#f97316", "#ef4444"];
 
 // ── Build edge key ────────────────────────────────────────────────────────────
