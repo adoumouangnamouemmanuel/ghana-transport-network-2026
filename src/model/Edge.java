@@ -1,7 +1,8 @@
 package model;
 
 /**
- * Represents a directed road between two towns.
+ * Edge in the road graph.
+ * Stores destination town, distance (km) and travel time (minutes).
  */
 public class Edge {
     private final String destination;
@@ -14,12 +15,14 @@ public class Edge {
         this.travelTimeMinutes = travelTimeMinutes;
     }
 
+    // getters
     public String getDestination() { return destination; }
     public int getDistanceKm() { return distanceKm; }
     public int getTravelTimeMinutes() { return travelTimeMinutes; }
 
+
     @Override
     public String toString() {
-        return String.format("-> %s [%d km, %d min]", destination, distanceKm, travelTimeMinutes);
+        return "-> " + destination + " [" + distanceKm + " km, " + travelTimeMinutes + " min]";
     }
 }
