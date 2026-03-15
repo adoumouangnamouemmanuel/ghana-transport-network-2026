@@ -33,7 +33,9 @@ public class GraphDisplay {
         StringBuilder sb = new StringBuilder();
         for (String town : towns) {
             sb.append(String.format("  %-28s", town));
-            if (++col % 3 == 0) { System.out.println(sb); sb.setLength(0); }
+            if (++col % 3 == 0) {
+                System.out.println(sb); sb.setLength(0);
+            }
         }
         if (sb.length() > 0) System.out.println(sb);
         System.out.println(SEPARATOR);
