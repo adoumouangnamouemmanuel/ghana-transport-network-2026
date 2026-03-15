@@ -8,7 +8,7 @@
 
 This is our solution to the Ghana Road Transport Network Programming Challenge 2026. The task was to model Ghana's intercity road network as a graph, implement core graph algorithms on it, and build tools that let someone explore routes, estimate costs, and manage road connectivity.
 
-We built a Java CLI that handles all 10 challenge questions. We also extended the project with a REST API (Spring Boot) and a web frontend (Next.js) so that the full system can be explored interactively in a browser — a live, visual version of everything the CLI already does.
+We built a Java CLI that handles all 10 challenge questions. We also extended the project with a REST API (Spring Boot) and a web frontend (Next.js) so that the full system can be explored interactively in a browser; a live, visual version of everything the CLI already does.
 
 ---
 
@@ -99,7 +99,7 @@ career-fair-competition/
 
 ## About the Dataset
 
-The raw dataset (`ghana_cities_graph_2026.txt`) contained **557 road entries**. When we loaded them, we noticed that **6 pairs of towns appeared twice** — once listed as A → B and again as B → A, but with slightly different distance and travel time values. This was unexpected, because the problem specification says roads are bidirectional and implies the same weight applies in both directions.
+The raw dataset (`ghana_cities_graph_2026.txt`) contained **557 road entries**. When we loaded them, we noticed that **6 pairs of towns appeared twice**; once listed as A → B and again as B → A, but with slightly different distance and travel time values. This was unexpected, because the problem specification says roads are bidirectional and implies the same weight applies in both directions.
 
 We treated these 6 as duplicates and removed them. Our assumption is that the discrepancy comes from measurement inconsistencies in the source data, and that a road between two towns should have one canonical distance and one travel time regardless of direction. The `addEdge` method in `TransportGraph.java` enforces this: it stores both directions of every road using the same weight, and it silently overwrites any earlier entry for the same pair. This means whichever direction is loaded last wins, giving us a clean and deterministic way to resolve conflicts without crashing or needing manual data correction.
 
@@ -111,7 +111,7 @@ After deduplication, the graph holds the correct set of unique bidirectional roa
 
 ### Option 1 – CLI (all 10 questions, terminal output)
 
-This mode runs the full question sequence — loading the graph, running path queries, printing results, launching the interactive menu, and outputting the complexity analysis.
+This mode runs the full question sequence, loading the graph, running path queries, printing results, launching the interactive menu, and outputting the complexity analysis.
 
 > Note: CLI compilation excludes `src/api/*` on purpose. Those files are Spring Boot classes and require Maven-managed dependencies.
 
@@ -131,7 +131,8 @@ java -cp out Main data/ghana_cities_graph_2026.txt
 ```
 
 **Using IntelliJ IDEA:**
-Open the project, navigate to `src/Main.java`, and click the green **Run** button next to `main()`. IntelliJ handles compilation automatically — no terminal needed.
+
+Open the project, navigate to `src/Main.java`, and click the green **Run** button next to `main()`. IntelliJ handles compilation automatically; no terminal needed.
 
 ---
 
@@ -157,6 +158,7 @@ mvn spring-boot:run
 ```
 
 **Using IntelliJ IDEA:**
+
 Open the project, navigate to `src/api/TransportApiApplication.java`, and click the green **Run** button. IntelliJ will use the project's Maven configuration automatically.
 
 The API starts on `http://localhost:8081`. You will see the graph loading output in the terminal once it is ready.
@@ -187,7 +189,7 @@ Then open `http://localhost:3000` in your browser.
 | C    | Q6       | Top 3 shortest paths with distances                                                  | `YenKShortest.kShortestPaths()`                                     |
 | D    | Q7       | Fuel cost for a route                                                                | `RouteRecommendation`                                               |
 | D    | Q8       | Total cost + best route recommendation                                               | `RecommendationEngine.recommend()`                                  |
-| E    | Q9       | Interactive system — query, top 3 paths, cost comparison, recommendation, edit roads | `InteractiveMenu`                                                   |
+| E    | Q9       | Interactive system, query, top 3 paths, cost comparison, recommendation, edit roads | `InteractiveMenu`                                                   |
 | E    | Q10      | Time complexity analysis / scalability estimate 100–5000 nodes                       | `ComplexityAnalyzer`                                                |
 
 ---
@@ -195,15 +197,19 @@ Then open `http://localhost:3000` in your browser.
 ## Key Design Decisions
 
 **Graph representation**
+
 We used a `LinkedHashMap<String, List<Edge>>` as the adjacency list. `LinkedHashMap` preserves insertion order, which keeps the town list consistent and predictable when printed. Town name lookups are case-insensitive (keys stored in lowercase), but the original casing is kept separately in a `canonicalNames` map so output is always readable.
 
 **Dijkstra reused for both Q4 and Q5**
-Rather than writing two separate path-finding methods, `Dijkstra.shortestPath()` takes a `Weight` enum (`DISTANCE` or `TIME`). The same algorithm runs either way — it just reads a different field from each edge. This keeps the code compact and avoids any risk of the two implementations drifting apart over time.
+
+Rather than writing two separate path-finding methods, `Dijkstra.shortestPath()` takes a `Weight` enum (`DISTANCE` or `TIME`). The same algorithm runs either way; it just reads a different field from each edge. This keeps the code compact and avoids any risk of the two implementations drifting apart over time.
 
 **Yen's K-Shortest Paths for Q6**
-Finding the top-3 shortest paths requires an algorithm that avoids returning the same path twice or paths with cycles. We implemented Yen's algorithm, which works by systematically exploring "spur paths" branching off each previously found best path. During spur computation, edges and nodes are temporarily disabled and then restored afterwards — the `EdgeRemover` class handles this cleanly so the main graph is never permanently modified mid-query.
+
+Finding the top-3 shortest paths requires an algorithm that avoids returning the same path twice or paths with cycles. We implemented Yen's algorithm, which works by systematically exploring "spur paths" branching off each previously found best path. During spur computation, edges and nodes are temporarily disabled and then restored afterwards; the `EdgeRemover` class handles this cleanly so the main graph is never permanently modified mid-query.
 
 **Handling the 6 duplicate edges**
+
 See the [About the Dataset](#about-the-dataset) section above. The short version: when a town pair appears twice with conflicting weights, we keep the last one loaded. The `addEdge` method handles this automatically.
 
 **Cost model (Q7 and Q8)**
@@ -216,12 +222,15 @@ See the [About the Dataset](#about-the-dataset) section above. The short version
 - The recommended route is the one with the lowest total cost.
 
 **Q9 – Interactive session**
+
 The interactive menu supports multiple back-to-back queries without restarting the program. For each town pair queried, it shows the top-3 shortest-distance paths, the fastest-time path, a side-by-side cost comparison for all three routes, and a final recommendation. The session also allows editing road weights (for road improvements or deterioration), removing roads entirely (bridge collapse, flooding), and adding new roads. All changes apply to the in-memory graph and persist until the program exits.
 
 **REST API for the frontend**
+
 The Spring Boot API wraps the same `TransportGraph` and algorithm classes used in the CLI. It loads the graph at startup and exposes it as a singleton bean, so all API requests share one consistent graph instance. CORS is configured to allow `localhost:3000` so the frontend can reach it during development without any proxy setup.
 
 **Graphical network view (Q2)**
+
 The competition requires showing all towns and distances visually. The web frontend satisfies this with an interactive force-directed graph (rendered on an HTML canvas) where every node is a town and every edge is labelled with its distance and travel time. The same view also highlights found routes in colour when a query is run.
 
 ---
@@ -244,4 +253,4 @@ For the Ghana road network where E ≈ 6V (sparse), Dijkstra simplifies to rough
 | 1,000     | ~60K                  | ~179M                |
 | 5,000     | ~358K                 | ~5.4B                |
 
-Dijkstra stays fast across the full range — at 5,000 nodes it is still well under a millisecond on modern hardware. Yen's cost grows much faster with K and V, but for K=3 on a few hundred nodes it completes in well under a second.
+Dijkstra stays fast across the full range; at 5,000 nodes it is still well under a millisecond on modern hardware. Yen's cost grows much faster with K and V, but for K=3 on a few hundred nodes it completes in well under a second.
